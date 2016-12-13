@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "VOIDPhysics",
+	uint64 LibraryId = 5806935207a395db,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},
