@@ -1,5 +1,9 @@
-//Copyright: © 2016 DigiPen, All Rights Reserved.
-//Author:    Zero Engine Team
+/********************************************************/
+/* Copyright 2016 DigiPen, All Rights Reserved          */
+/* Last Update: 12/13/2016                              */
+/* Author: Zero Engine Team                             */
+/* Last updated by: Arend Danielek                      */
+/********************************************************/
 
 class MaintainVelocity : ZilchComponent
 {

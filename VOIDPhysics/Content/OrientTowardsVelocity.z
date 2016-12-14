@@ -1,0 +1,86 @@
+/********************************************************/
+/* Copyright 2016 DigiPen, All Rights Reserved          */
+/* Last Update: 12/13/2016                              */
+/* Author: Zero Engine Team                             */
+/* Last updated by: Arend Danielek                      */
+/********************************************************/
+
+class OrientTowardsVelocity : ZilchComponent
+{
+    // The orientation component is used to align the object's forward with it's velocity.
+    [Dependency]
+    var Orientation : Orientation = null;
+    
+    [Dependency]
+    var RigidBody : RigidBody;
+    
+    var Mode : Mode2DStates = Mode2DStates.InheritFromSpace;
+    
+    var WorldUp : Real3
+    {
+        get
+        {
+            //Assuming Y is Up in 2D and X is Right
+            if(this.Mode == Mode2DStates.Mode2D)
+                return Real3(0,0,1);
+            else if(this.Mode == Mode2DStates.Mode3D)
+                return Real3(0,1,0);
+            else
+            {
+                if(this.Space.PhysicsSpace.Mode2D)
+                    return Real3(0,0,1);
+                else
+                    return Real3(0,1,0);
+            }
+        }
+    }
+    
+    function Initialize(init : CogInitializer)
+    {
+        
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    
+    function OnLogicUpdate(updateEvent : UpdateEvent)
+    {
+        if(this.Mode == Mode2DStates.Mode2D)
+            this.Orient2D();
+        else if(this.Mode == Mode2DStates.Mode3D)
+            this.Orient3D();
+        else if(this.Mode == Mode2DStates.InheritFromSpace)
+        {
+            if(this.Space.PhysicsSpace.Mode2D)
+                this.Orient2D();
+            else
+                this.Orient3D();
+        }
+    }
+    
+    function Orient2D()
+    {
+        var vel = this.RigidBody.Velocity;
+        
+        // If we don't do this check and get a zero velocity
+        // vector then our object will snap to 0 degrees. This would cause a
+        // non moving object with a rotation of 90 degrees to snap to 0 degrees all of a sudden.
+        if(Math.Length(vel) < 0.0001)
+            return;
+        
+        var up = Real3(0, 0, 1);
+        this.Orientation.LookAtDirectionWithUp(vel, up);
+    }
+    
+    function Orient3D()
+    {
+        var vel = this.RigidBody.Velocity;
+        
+        // If we don't do this check and get a zero velocity
+        // vector then our object will snap to 0 degrees. This would cause a
+        // non moving object with a rotation of 90 degrees to snap to 0 degrees all of a sudden.
+        if(Math.Length(vel) < 0.0001)
+            return;
+        
+        var up = Real3(0, 0, 1);
+        this.Orientation.LookAtDirectionWithUp(vel, up);
+    }
+}
