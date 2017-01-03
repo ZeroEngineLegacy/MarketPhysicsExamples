@@ -1,9 +1,11 @@
-/********************************************************/
-/* Copyright 2016 DigiPen, All Rights Reserved          */
-/* Last Update: 12/13/2016                              */
-/* Author: Zero Engine Team                             */
-/* Last updated by: Arend Danielek                      */
-/********************************************************/
+/************************************************************************************************************/
+/* Copyright 2016 DigiPen, All Rights Reserved                                                              */
+/* Last Update: 1/3/2016                                                                                    */
+/* Author: Zero Engine Team                                                                                 */
+/* Last updated by: Arend Danielek                                                                          */
+/* Class: MaintainVelocity                                                                                  */
+/* Brief: Maintains the velocity from the previous frame.                                                   */
+/************************************************************************************************************/
 
 class MaintainVelocity : ZilchComponent
 {
