@@ -4,17 +4,23 @@
 /* Author: Zero Engine Team                                                                                 */
 /* Last updated by: Arend Danielek                                                                          */
 /* Class: MaintainVelocity                                                                                  */
-/* Brief: Maintains the velocity from the previous frame.                                                   */
+/* Brief: Maintains the velocity from the initial frame.                                                   */
 /************************************************************************************************************/
 
 class MaintainVelocity : ZilchComponent
 {
+    [Dependency]
+    var RigidBody : RigidBody;
+    
     // The speed to maintain
     [Property]
     var Speed : Real = 10.0;
     
+    var Direction : Real3 = Real3();
+    
     function Initialize(init : CogInitializer)
     {
+        this.Direction = Math.Normalize(this.RigidBody.Velocity);
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
     
@@ -22,8 +28,6 @@ class MaintainVelocity : ZilchComponent
     {
         // Get our current (normalized) velocity direction and
         // then scale it to have our desired speed
-        var rigidBody = this.Owner.RigidBody;
-        var vel = Math.Normalize(rigidBody.Velocity);
-        rigidBody.Velocity = vel * this.Speed;
+        this.RigidBody.Velocity = this.Direction * this.Speed;
     }
 }

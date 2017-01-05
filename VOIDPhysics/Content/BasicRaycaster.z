@@ -6,6 +6,7 @@
 /* Class: BasicRaycaster                                                                                    */
 /* Brief: Basic raycasting example                                                                          */
 /************************************************************************************************************/
+
 class BasicRaycaster : ZilchComponent
 {
     // The local space vector that we use to raycast
@@ -64,5 +65,6 @@ class BasicRaycaster : ZilchComponent
         line.HeadSize = this.HeadSize;
         line.Color = this.DrawColor;
         line.OnTop = this.OnTop;
+        DebugDraw.Add(line);
     }
 }
