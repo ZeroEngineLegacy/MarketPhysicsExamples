@@ -20,7 +20,9 @@ class MaintainVelocity : ZilchComponent
     
     function Initialize(init : CogInitializer)
     {
+        // Get the initial velocity from the rigidbody
         this.Direction = Math.Normalize(this.RigidBody.Velocity);
+        
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
     

@@ -17,7 +17,8 @@ class OrientTowardsVelocity : ZilchComponent
     [Dependency]
     var RigidBody : RigidBody;
     
-    var Mode : Mode2DStates = Mode2DStates.InheritFromSpace;
+    [Property]
+    var Mode : Mode2DStates;
     
     var WorldUp : Real3
     {
