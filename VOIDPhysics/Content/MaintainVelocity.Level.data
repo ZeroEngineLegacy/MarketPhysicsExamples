@@ -197,7 +197,7 @@ Level
 		}
 		RigidBody 
 		{
-			var Velocity = Vec3{15, 0, 0}
+			var Velocity = Vec3{10, 5, 0}
 			var AngularVelocity = Vec3{0, 0, 0}
 			var DynamicState = RigidBodyDynamicState.Dynamic
 			var AllowSleep = true

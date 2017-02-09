@@ -1,70 +1,63 @@
-/************************************************************************************************************/
-/* Copyright 2016 DigiPen, All Rights Reserved                                                              */
-/* Last Update: 1/3/2016                                                                                    */
-/* Author: Zero Engine Team                                                                                 */
-/* Last updated by: Arend Danielek                                                                          */
-/* Class: BasicRaycaster                                                                                    */
-/* Brief: Basic raycasting example                                                                          */
-/************************************************************************************************************/
+//**********************************************************************************************************
+// Copyright 2016 DigiPen, All Rights Reserved                                                              
+// Last Update: 2/9/2016                                                                                    
+// Author: Zero Engine Team                                                                                 
+// Last updated by: Joshua Davis                                                                            
+// Class: BasicRaycaster                                                                                    
+// Brief: Basic raycasting example                                                                          
+//**********************************************************************************************************
 
 class BasicRaycaster : ZilchComponent
 {
-    // The local space vector that we use to raycast
-    [Property]
-    var LocalVector : Real3 = Real3(0.0, 1.0, 0.0);
-    
-    // Color to draw the ray and arrow head
-    [Property]
-    var DrawColor : Real4 = Real4(1.0, 1.0, 1.0, 1.0);
-    
-    // Size of the arrow head to draw
-    [Property]
-    var HeadSize : Real = 0.25;
-    
-    // Is the ray is always drawn on top of everything else?
-    [Property]
-    var OnTop : Boolean = true;
-    
-    function Initialize(init : CogInitializer)
-    {
-        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-    }
+  [Dependency] var Transform : Transform;
+  
+  // The local space vector that we use to raycast
+  [Property] var LocalVector : Real3 = Real3(0.0, 1.0, 0.0);
+  
+  // The maximum distance the raycast will go
+  [Property] var MaxCastDistance : Real = 50.0;
+  
+  // Color to draw the ray and arrow head
+  [Property] var DrawColor : Real4 = Real4(1.0, 1.0, 1.0, 1.0);
+  
+  // Size of the arrow head to draw
+  [Property] var HeadSize : Real = 0.25;
+  
+  // Is the ray is always drawn on top of everything else?
+  [Property] var OnTop : Boolean = true;
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
 
-    function OnLogicUpdate(updateEvent : UpdateEvent)
-    {
-        var transform = this.Owner.Transform;
-        
-        // Get the ray start and direction
-        var ray = Ray();
-        ray.Start = transform.Translation;
-        ray.Direction = transform.TransformNormal(this.LocalVector);
-        ray.Direction = Math.Normalize(ray.Direction);
-        
-        // Do a raycast for only 1 result
-        var castResult = this.Space.PhysicsSpace.CastRayFirst(ray);
-        
-        //Initialize distance for drawing raycast to max length encase we don't hit an object
-        var distance = Real.PositiveMax;
-        
-        //If an object was hit by the raycast draw distance to that object instead
-        if(castResult.ObjectHit != null)
-            distance = castResult.Distance;
-        
-        // Calculate end point for drawing the raycast
-        var endPos = ray.Start + (ray.Direction * distance);
-        
-        //Draw the ray
-        this.DrawArrow(ray.Start, endPos);
-    }
+  function OnLogicUpdate(updateEvent : UpdateEvent)
+  {
+    var transform = this.Transform;
     
-    function DrawArrow(start : Real3, end : Real3)
-    {
-        var line = DebugLine();
-        line.Start = start;
-        line.End = end;
-        line.HeadSize = this.HeadSize;
-        line.Color = this.DrawColor;
-        line.OnTop = this.OnTop;
-        DebugDraw.Add(line);
-    }
+    // Compute the ray's world-space start and direction
+    var ray = Ray();
+    ray.Start = transform.WorldTranslation;
+    ray.Direction = transform.TransformNormal(this.LocalVector);
+    ray.Direction = Math.Normalize(ray.Direction);
+    
+    // Initialize the max distance for the raycast
+    var distance = this.MaxCastDistance;
+    
+    // Do a raycast for only 1 result
+    var castResult = this.Space.PhysicsSpace.CastRayFirst(ray);
+    
+    // If an object was hit by the raycast, store the distance along the ray that we hit an object
+    if(castResult.ObjectHit != null)
+      distance = Math.Min(this.MaxCastDistance, castResult.Distance);
+    
+    // Draw the ray up to our hit point (or max distance)
+    var line = DebugLine();
+    line.Start = ray.Start;
+    line.End = ray.Start + distance * ray.Direction;
+    line.HeadSize = this.HeadSize;
+    line.Color = this.DrawColor;
+    line.OnTop = this.OnTop;
+    DebugDraw.Add(line);
+  }
 }

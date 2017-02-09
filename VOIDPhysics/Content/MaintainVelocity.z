@@ -1,35 +1,30 @@
-/************************************************************************************************************/
-/* Copyright 2016 DigiPen, All Rights Reserved                                                              */
-/* Last Update: 1/3/2016                                                                                    */
-/* Author: Zero Engine Team                                                                                 */
-/* Last updated by: Arend Danielek                                                                          */
-/* Class: MaintainVelocity                                                                                  */
-/* Brief: Maintains the velocity from the initial frame.                                                   */
-/************************************************************************************************************/
+//**********************************************************************************************************
+// Copyright 2016 DigiPen, All Rights Reserved                                                              
+// Last Update: 2/9/2016                                                                                    
+// Author: Zero Engine Team                                                                                 
+// Last updated by: Joshua Davis                                                                            
+// Class: MaintainVelocity                                                                                  
+// Brief: Keeps the velocity of this object at a fixed speed.                                               
+//**********************************************************************************************************
 
 class MaintainVelocity : ZilchComponent
 {
-    [Dependency]
-    var RigidBody : RigidBody;
-    
-    // The speed to maintain
-    [Property]
-    var Speed : Real = 10.0;
-    
-    var Direction : Real3 = Real3();
-    
-    function Initialize(init : CogInitializer)
-    {
-        // Get the initial velocity from the rigidbody
-        this.Direction = Math.Normalize(this.RigidBody.Velocity);
-        
-        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-    }
-    
-    function OnLogicUpdate(updateEvent : UpdateEvent)
-    {
-        // Get our current (normalized) velocity direction and
-        // then scale it to have our desired speed
-        this.RigidBody.Velocity = this.Direction * this.Speed;
-    }
+  [Dependency] var RigidBody : RigidBody;
+  
+  // The speed to maintain
+  [Property] var Speed : Real = 10.0;
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+  
+  function OnLogicUpdate(updateEvent : UpdateEvent)
+  {
+    // Get our current (normalized) velocity direction and
+    // then scale it to have our desired speed
+    var rigidBody = this.RigidBody;
+    var velocityDirection = Math.Normalize(rigidBody.Velocity);
+    rigidBody.Velocity = velocityDirection * this.Speed;
+  }
 }
