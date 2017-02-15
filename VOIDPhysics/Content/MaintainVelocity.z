@@ -23,8 +23,7 @@ class MaintainVelocity : ZilchComponent
   {
     // Get our current (normalized) velocity direction and
     // then scale it to have our desired speed
-    var rigidBody = this.RigidBody;
-    var velocityDirection = Math.Normalize(rigidBody.Velocity);
-    rigidBody.Velocity = velocityDirection * this.Speed;
+    var velocityDirection = Math.Normalize(this.RigidBody.Velocity);
+    this.RigidBody.Velocity = velocityDirection * this.Speed;
   }
 }
