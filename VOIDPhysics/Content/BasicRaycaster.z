@@ -52,9 +52,7 @@ class BasicRaycaster : ZilchComponent
       distance = Math.Min(this.MaxCastDistance, castResult.Distance);
     
     // Draw the ray up to our hit point (or max distance)
-    var line = DebugLine();
-    line.Start = ray.Start;
-    line.End = ray.Start + distance * ray.Direction;
+    var line = DebugLine(ray.Start, ray.Start + distance * ray.Direction);
     line.HeadSize = this.HeadSize;
     line.Color = this.DrawColor;
     line.OnTop = this.OnTop;
