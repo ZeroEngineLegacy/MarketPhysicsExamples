@@ -39,6 +39,12 @@ Level
 			var HighlightInterval = 10
 			var FollowEditorCamera = false
 		}
+		GraphDrawer 
+		{
+			var Scale = Real2{40, 40}
+			var TickSpacing = Real2{2, 2}
+			var TickLength = 0.5
+		}
 	}
 	Cog 
 	{
@@ -46,9 +52,9 @@ Level
 		var LinkId = 2
 		Transform 
 		{
-			var Translation = Real3{-9.64310837, 24.0404282, 87.3462524}
+			var Translation = Real3{-1.91951299, 38.6597137, 65.6521759}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.13292031, -0.0544610843, -0.00731504476, 0.989602268}
+			var Rotation = Quaternion{-0.114912033, -0.0208034478, -0.00240704464, 0.993154943}
 		}
 		Camera 
 		{
@@ -67,7 +73,7 @@ Level
 			var RenderOrder = 0
 			var NormalizedSize = Real2{1, 1}
 			var NormalizedOffset = Real2{0, 0}
-			var Camera = CogPath
+			var CameraPath = CogPath
 			{
 				var Path = "."
 				var ErrorOnResolveToNull = false
@@ -82,7 +88,7 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Renderer = CogPath
+			var RendererPath = CogPath
 			{
 				var Path = ":/Renderer"
 				var ErrorOnResolveToNull = false
@@ -104,10 +110,11 @@ Level
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
-			var LookDistance = 91.1059799
-			var VerticalAngle = 0.267035544
-			var HorizontalAngle = 0.109955661
-			var LookTarget = Real3{0, 0, 0}
+			var Previous3DMode = ControlMode.Orbit
+			var LookDistance = 67.4930573
+			var VerticalAngle = 0.230383635
+			var HorizontalAngle = 0.0418875068
+			var LookTarget = Real3{0.832102299, 23.2476044, 0}
 			var MoveSensitivity = 1
 		}
 	}
@@ -117,7 +124,7 @@ Level
 		var LinkId = 4
 		Transform 
 		{
-			var Translation = Real3{0, 0, 50}
+			var Translation = Real3{26, 15, 50}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -125,9 +132,9 @@ Level
 		{
 			var NearPlane = 0.5
 			var FarPlane = 100
-			var PerspectiveMode = PerspectiveMode.Perspective
+			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 20
+			var Size = 40
 		}
 		CameraViewport 
 		{
@@ -138,7 +145,7 @@ Level
 			var RenderOrder = 0
 			var NormalizedSize = Real2{1, 1}
 			var NormalizedOffset = Real2{0, 0}
-			var Camera = CogPath
+			var CameraPath = CogPath
 			{
 				var Path = "."
 				var ErrorOnResolveToNull = false
@@ -153,7 +160,7 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Renderer = CogPath
+			var RendererPath = CogPath
 			{
 				var Path = ":/Renderer"
 				var ErrorOnResolveToNull = false
@@ -179,11 +186,11 @@ Level
 	}
 	Cog 
 	{
-		var Name = "Cube"
+		var Name = "AutoOrient"
 		var LinkId = 5
 		Transform 
 		{
-			var Translation = Real3{0, 0, 0}
+			var Translation = Real3{0.832102299, 23.2476044, 0}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -192,12 +199,16 @@ Level
 			var Visible = true
 			var ViewCulling = true
 			var VisibilityEvents = true
-			var Material = "583afb5e7bf75e18:ZeroMaterial"
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "5828b036bd65b5d8:OpaqueFlat"
 			var Mesh = "4de0354322b345ae:Cube"
 		}
 		RigidBody 
 		{
-			var Velocity = Real3{15, 0, 0}
+			var Velocity = Real3{10, 10, 0}
 			var AngularVelocity = Real3{0, 0, 0}
 			var DynamicState = RigidBodyDynamicState.Dynamic
 			var AllowSleep = true
@@ -211,7 +222,66 @@ Level
 			var SendsEvents = true
 			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
-			var Offset = Real3{0, 0, 0}
+			var TranslationOffset = Real3{0, 0, 0}
+			var HalfSize = Real3{0.5, 0.5, 0.5}
+		}
+		Orientation 
+		{
+			var GlobalUp = Real3{0, 1, 0}
+			var LocalOrientationBasis = Quaternion{0, -0.707106769, 0, 0.707106769}
+			var DefaultBases = OrientationBases.ForwardXUpY
+		}
+		OrientTowardsVelocity 
+		{
+			var Mode = Mode2DStates.InheritFromSpace
+		}
+		MaterialOverride 
+		{
+			var AlbedoValue = Real4{0.764705956, 0.796078503, 0.443137288, 1}
+		}
+		Hierarchy 
+		{
+		}
+	}
+	Cog 
+	{
+		var Name = "Regular"
+		var LinkId = 6
+		Transform 
+		{
+			var Translation = Real3{0.832102299, 13.7746162, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Model 
+		{
+			var Visible = true
+			var ViewCulling = true
+			var VisibilityEvents = true
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "5828b036bd65b5d8:OpaqueFlat"
+			var Mesh = "4de0354322b345ae:Cube"
+		}
+		RigidBody 
+		{
+			var Velocity = Real3{10, 10, 0}
+			var AngularVelocity = Real3{0, 0, 0}
+			var DynamicState = RigidBodyDynamicState.Dynamic
+			var AllowSleep = true
+			var Asleep = false
+			var RotationLocked = false
+			var Mode2D = Mode2DStates.InheritFromSpace
+		}
+		BoxCollider 
+		{
+			var Ghost = false
+			var SendsEvents = true
+			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var CollisionGroup = "4e740859314e5515:DefaultGroup"
+			var TranslationOffset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 		Orientation 
@@ -220,9 +290,9 @@ Level
 			var LocalOrientationBasis = Quaternion{0, 1, 0, -0}
 			var DefaultBases = OrientationBases.ForwardZUpY
 		}
-		OrientTowardsVelocity 
+		MaterialOverride 
 		{
-			var Mode = Mode2DStates.InheritFromSpace
+			var AlbedoValue = Real4{0.352941185, 0.321568638, 0.333333343, 1}
 		}
 	}
 	Cog 
@@ -231,17 +301,202 @@ Level
 		var LinkId = 3
 		DeferredRenderer 
 		{
-			var DrawDebug = true
 			var GeometryDebug = GeometryValue.None
-			var ShowDiffuse = true
-			var ShowSpecular = true
+			var EditorDebugDraw = true
+			var GameDebugDraw = true
+			var RenderDiffuse = true
+			var RenderSpecular = true
+			var RenderSkybox = false
 			var Skybox = "5822dec85e380cf1:SimpleSkybox"
 			var ClearColor = Real4{0, 0, 0, 1}
-			var DrawSkybox = true
 			var DirectLighting = true
 			var IndirectLighting = true
 			var IndirectIntensity = 1
 			var ToneMap = true
+		}
+	}
+	Cog 
+	{
+		var Name = "Title"
+		var LinkId = 7
+		Transform 
+		{
+			var Translation = Real3{23.7362709, 29.9748535, 0.727710247}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		SpriteText 
+		{
+			var Visible = true
+			var ViewCulling = true
+			var VisibilityEvents = true
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "582c575af53d18c9:AlphaSprite"
+			var VertexColor = Real4{1, 1, 1, 1}
+			var GeometryMode = SpriteGeometryMode.ZPlane
+			var Text = "Auto Orient vs. Normal"
+			var Font = "57343753bb4eaaec:NotoSans-Regular"
+			var FontSize = 100
+			var PixelsPerUnit = 128
+			var TextAlign = TextAlign.Center
+		}
+	}
+	Cog 
+	{
+		var Name = "Legend"
+		var LinkId = 8
+		Transform 
+		{
+			var Translation = Real3{20.3163586, -2, 0.436626166}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog 
+			{
+				var Name = ""
+				var LinkId = 9
+				Transform 
+				{
+					var Translation = Real3{6.43274879, 0, 0.291084081}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				SpriteText 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "582c575af53d18c9:AlphaSprite"
+					var VertexColor = Real4{1, 1, 1, 1}
+					var GeometryMode = SpriteGeometryMode.ZPlane
+					var Text = "= Regular"
+					var Font = "57343753bb4eaaec:NotoSans-Regular"
+					var FontSize = 100
+					var PixelsPerUnit = 128
+					var TextAlign = TextAlign.Left
+				}
+			}
+			Cog 
+			{
+				var Name = ""
+				var LinkId = 10
+				Transform 
+				{
+					var Translation = Real3{5.8433609, 0, -0.436626166}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5828b036bd65b5d8:OpaqueFlat"
+					var Mesh = "4de0354322b345ae:Cube"
+				}
+				MaterialOverride 
+				{
+					var AlbedoValue = Real4{0.352941185, 0.321568638, 0.333333343, 1}
+				}
+			}
+			Cog 
+			{
+				var Name = ""
+				var LinkId = 11
+				Transform 
+				{
+					var Translation = Real3{-2.72514534, 0, 0.291084081}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				SpriteText 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "582c575af53d18c9:AlphaSprite"
+					var VertexColor = Real4{1, 1, 1, 1}
+					var GeometryMode = SpriteGeometryMode.ZPlane
+					var Text = "= Auto Orient"
+					var Font = "57343753bb4eaaec:NotoSans-Regular"
+					var FontSize = 100
+					var PixelsPerUnit = 128
+					var TextAlign = TextAlign.Left
+				}
+			}
+			Cog 
+			{
+				var Name = ""
+				var LinkId = 12
+				Transform 
+				{
+					var Translation = Real3{-6.23642921, 0, 0.291084081}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				SpriteText 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "582c575af53d18c9:AlphaSprite"
+					var VertexColor = Real4{1, 1, 1, 1}
+					var GeometryMode = SpriteGeometryMode.ZPlane
+					var Text = "Key:"
+					var Font = "57343753bb4eaaec:NotoSans-Regular"
+					var FontSize = 100
+					var PixelsPerUnit = 128
+					var TextAlign = TextAlign.Center
+				}
+			}
+			Cog 
+			{
+				var Name = ""
+				var LinkId = 13
+				Transform 
+				{
+					var Translation = Real3{-3.31453323, 0, -0.436626166}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Model 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "5828b036bd65b5d8:OpaqueFlat"
+					var Mesh = "4de0354322b345ae:Cube"
+				}
+				MaterialOverride 
+				{
+					var AlbedoValue = Real4{0.764705956, 0.796078503, 0.443137288, 1}
+				}
+			}
 		}
 	}
 }
