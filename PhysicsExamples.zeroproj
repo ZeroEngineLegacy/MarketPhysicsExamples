@@ -4,11 +4,11 @@ Cog
 	var Name = ""
 	ProjectSettings 
 	{
-		var ProjectName = "VOIDPhysics"
+		var ProjectName = "PhysicsExamples"
 		var ProjectOwner = ""
 		var DefaultLevel = "Level"
 		var ProjectSpace = "Space"
-		var ProjectEngineRevision = 16993
+		var ProjectEngineRevision = 116
 		var AutoTakeProjectScreenshot = true
 		var Guid = 0x5806935207a32539
 	}
@@ -16,7 +16,6 @@ Cog
 	{
 		var ViewCube = true
 		var ViewCubeSize = 0.150000006
-		var ScriptReloadEditor = ScriptReloadMethod.ReInitializeObjects
 		var ScriptReloadGame = ScriptReloadMethod.PatchObjects
 		var AutoUpdateContentChanges = true
 	}
@@ -27,10 +26,11 @@ Cog
 	LauncherProjectInfo 
 	{
 		var Tags = ""
-		var ExperimentalBranchName = "BraveCobra"
-		var MajorVersion = 0
+		var ExperimentalBranchName = ""
+		var MajorVersion = 1
 		var MinorVersion = 0
 		var PatchVersion = 0
-		var RevisionId = 16993
+		var RevisionId = 116
+		var ShortChangeSet = "d11382dc5a97"
 	}
 }

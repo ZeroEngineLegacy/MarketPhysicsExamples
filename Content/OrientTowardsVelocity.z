@@ -1,24 +1,17 @@
-//**********************************************************************************************************
-// Copyright 2016 DigiPen, All Rights Reserved                                                              
-// Last Update: 2/9/2017                                                                                    
-// Author: Zero Engine Team                                                                                 
-// Last updated by: Joshua Davis                                                                            
-// Class: OrientTowardsVelocity                                                                             
-// Brief: Rotates the object so the object's LocalForward axis is aligned in WorldSpace with the direction  
-// of the object's velocity.                                                                                
-//**********************************************************************************************************
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright 2016 DigiPen USA Corporation, All Rights Reserved
+// Author: Joshua Davis
+// Last updated by: Joshua Davis
+// Last update: 8/9/2017
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Rotates the object so the object's LocalForward axis is aligned in
+// WorldSpace with the direction of the object's velocity.
 class OrientTowardsVelocity : ZilchComponent
 {
   // The orientation component is used to align the object's forward with it's velocity.
-  [Dependency]
-  var Orientation : Orientation = null;
-  
-  [Dependency]
-  var RigidBody : RigidBody;
-  
-  [Property]
-  var Mode : Mode2DStates;
+  [Dependency] var Orientation : Orientation = null;
+  [Dependency] var RigidBody : RigidBody;
   
   function Initialize(init : CogInitializer)
   {

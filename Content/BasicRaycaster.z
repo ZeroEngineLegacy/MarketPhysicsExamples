@@ -1,28 +1,23 @@
-//**********************************************************************************************************
-// Copyright 2016 DigiPen, All Rights Reserved                                                              
-// Last Update: 2/9/2016                                                                                    
-// Author: Zero Engine Team                                                                                 
-// Last updated by: Joshua Davis                                                                            
-// Class: BasicRaycaster                                                                                    
-// Brief: Basic raycasting example                                                                          
-//**********************************************************************************************************
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright 2016 DigiPen USA Corporation, All Rights Reserved
+// Author: Joshua Davis
+// Last updated by: Joshua Davis
+// Last update: 8/9/2017
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Basic example of raycasting with physics
 class BasicRaycaster : ZilchComponent
 {
   [Dependency] var Transform : Transform;
   
   // The local space vector that we use to raycast
-  [Property] var LocalVector : Real3 = Real3(0.0, 1.0, 0.0);
-  
+  [Property] var LocalVector : Real3 = Real3.YAxis;
   // The maximum distance the raycast will go
   [Property] var MaxCastDistance : Real = 50.0;
-  
   // Color to draw the ray and arrow head
-  [Property] var DrawColor : Real4 = Real4(1.0, 1.0, 1.0, 1.0);
-  
+  [Property] var DrawColor : Real4 = Real4(1.0);
   // Size of the arrow head to draw
   [Property] var HeadSize : Real = 0.25;
-  
   // Is the ray is always drawn on top of everything else?
   [Property] var OnTop : Boolean = true;
   
